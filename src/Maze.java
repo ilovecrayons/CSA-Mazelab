@@ -10,12 +10,13 @@ import graphics.MazeCanvas.Side;
  */
 public class Maze {
   private MazeCanvas mazeCanvas;
-
+  private Cell[][] gridOfCells;
   /**
    * @param mc MazeCanvas
    */
   public Maze(MazeCanvas mc) {
     this.mazeCanvas = mc;
+    gridOfCells = new Cell[mazeCanvas.getRows()][mazeCanvas.getCols()];
   }
 
   /**
@@ -27,6 +28,22 @@ public class Maze {
         mazeCanvas.drawCell(row, col);
       }
     }
+  }
+
+  public void initialize() {
+    for (int row = 0; row < mazeCanvas.getRows(); row++) {
+      for (int col = 0; col < mazeCanvas.getCols(); col++) {
+        if (row == 0 || row == mazeCanvas.getRows() - 1 || col == 0 || col == mazeCanvas.getCols() - 1) {
+          gridOfCells[row][col] = new EdgeCell(mazeCanvas, row, col);
+        } else {
+          gridOfCells[row][col] = new Cell(mazeCanvas, row, col);
+        }
+      }
+    }
+  }
+  
+  public Cell getCell(int row, int col) {
+    return gridOfCells[row][col];
   }
 
   /**

@@ -12,6 +12,7 @@ public class Cell {
     this.row = row;
     this.col = col;
     this.mc = mc;
+    this.listOfWalls = new ArrayList<Side>();
     this.listOfWalls.add(Side.Top);
     this.listOfWalls.add(Side.Bottom);
     this.listOfWalls.add(Side.Left);
@@ -27,7 +28,7 @@ public class Cell {
     return this.col;
   }
 
-  public ArrayList<Side> getListOfWalls() {
+  public ArrayList<Side> getWalls() {
     return new ArrayList<Side>(this.listOfWalls);
   }
 
