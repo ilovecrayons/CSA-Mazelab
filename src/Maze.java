@@ -31,15 +31,52 @@ public class Maze {
   }
 
   public void initialize() {
+    int count = (int) (0.05 * (mazeCanvas.getRows() - 2) * (mazeCanvas.getCols() - 2));
+    int nPerim = 2 * mazeCanvas.getRows() + 2 * mazeCanvas.getCols() - 4;
+    int iEntry = (int) (Math.random() * nPerim);
+    int iExit = (int) (Math.random() * nPerim);
+    int edgeCount = 0;
     for (int row = 0; row < mazeCanvas.getRows(); row++) {
       for (int col = 0; col < mazeCanvas.getCols(); col++) {
         if (row == 0 || row == mazeCanvas.getRows() - 1 || col == 0 || col == mazeCanvas.getCols() - 1) {
-          gridOfCells[row][col] = new EdgeCell(mazeCanvas, row, col);
+          if (edgeCount == iEntry) {
+            gridOfCells[row][col] = new EntryCell(mazeCanvas, row, col);
+          } else if (edgeCount == iExit) {
+            gridOfCells[row][col] = new ExitCell(mazeCanvas, row, col);
+          } else {
+            gridOfCells[row][col] = new EdgeCell(mazeCanvas, row, col);
+          }
+          edgeCount++;
+        } else if (count > 0 && Math.random() < 0.05) {
+          gridOfCells[row][col] = new BlockCell(mazeCanvas, row, col);
+          count--;
         } else {
           gridOfCells[row][col] = new Cell(mazeCanvas, row, col);
         }
       }
     }
+  }
+  
+  public Cell getEntryCell() {
+    for (int row = 0; row < mazeCanvas.getRows(); row++) {
+      for (int col = 0; col < mazeCanvas.getCols(); col++) {
+        if (gridOfCells[row][col] instanceof EntryCell) {
+          return (EntryCell) gridOfCells[row][col];
+        }
+      }
+    }
+    return null;
+  }
+
+  public Cell getExitCell() {
+    for (int row = 0; row < mazeCanvas.getRows(); row++) {
+      for (int col = 0; col < mazeCanvas.getCols(); col++) {
+        if (gridOfCells[row][col] instanceof ExitCell) {
+          return (ExitCell) gridOfCells[row][col];
+        }
+      }
+    }
+    return null;
   }
   
   public Cell getCell(int row, int col) {
