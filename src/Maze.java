@@ -6,11 +6,12 @@ import graphics.MazeCanvas.Side;
 
 /**
  * @author s-FEIHUANG
- * Maze class implementation
+ *         Maze class implementation
  */
 public class Maze {
   private MazeCanvas mazeCanvas;
   private Cell[][] gridOfCells;
+
   /**
    * @param mc MazeCanvas
    */
@@ -56,7 +57,7 @@ public class Maze {
       }
     }
   }
-  
+
   public Cell getEntryCell() {
     for (int row = 0; row < mazeCanvas.getRows(); row++) {
       for (int col = 0; col < mazeCanvas.getCols(); col++) {
@@ -78,7 +79,7 @@ public class Maze {
     }
     return null;
   }
-  
+
   public Cell getCell(int row, int col) {
     return gridOfCells[row][col];
   }
@@ -134,5 +135,27 @@ public class Maze {
       }
     }
 
+  }
+
+  public boolean inBounds(int row, int col) {
+    return row >= 0 && row < mazeCanvas.getRows() && col >= 0 && col < mazeCanvas.getCols();
+  }
+
+  public Cell getNeighbor(Cell cell, Side side) {
+    int row = cell.getRow();
+    int col = cell.getCol();
+
+    switch (side) {
+      case Top:
+        return (inBounds(row - 1, col) ? getCell(row - 1, col) : null);
+      case Bottom:
+        return (inBounds(row + 1, col) ? getCell(row + 1, col) : null);
+      case Left:
+        return (inBounds(row, col - 1) ? getCell(row, col - 1) : null);
+      case Right:
+        return (inBounds(row, col + 1) ? getCell(row, col + 1) : null);
+      default:
+        return null;
+    }
   }
 }

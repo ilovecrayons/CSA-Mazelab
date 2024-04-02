@@ -14,6 +14,8 @@ public class Program {
     Maze maze = new Maze(canvas);
     canvas.open();
     maze.initialize();
+    Generator generator = new Generator(canvas, maze);
+    generator.run();
     canvas.pause();
     canvas.close();
 

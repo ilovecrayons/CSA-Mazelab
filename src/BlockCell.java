@@ -8,4 +8,9 @@ public class BlockCell extends ShadedCell{
   public BlockCell(MazeCanvas mazeCanvas, int row, int col) {
     super(mazeCanvas, row, col, blockShadeColor);
   }
+  
+  @Override
+  public boolean getVisited() {
+    return true;
+  }
 }

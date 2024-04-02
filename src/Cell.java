@@ -7,6 +7,15 @@ public class Cell {
   private int col;
   private MazeCanvas mc;
   private ArrayList<Side> listOfWalls;
+  private boolean visited = false;
+
+  public boolean getVisited() {
+    return visited;
+  }
+
+  public void setVisited(boolean visited) {
+    this.visited = visited;
+  }
 
   public Cell(MazeCanvas mc, int row, int col) {
     this.row = row;
