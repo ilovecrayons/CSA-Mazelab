@@ -1,8 +1,15 @@
 
 import java.awt.Color;
+import java.util.PriorityQueue;
+import java.util.Set;
 
 import graphics.MazeCanvas;
 import graphics.MazeCanvas.Side;
+
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.HashSet;
+import java.util.List;
 
 /**
  * @author s-FEIHUANG
@@ -157,5 +164,55 @@ public class Maze {
       default:
         return null;
     }
+  }
+
+  private int manhattanHeuristic(Cell a, Cell b) {
+    return Math.abs(a.getRow() - b.getRow()) + Math.abs(a.getCol() - b.getCol());
+  }
+
+  public List<Cell> astar(){
+    PriorityQueue<Cell> openSet = new PriorityQueue<>(Comparator.comparingInt(Cell::getFCost));
+    Set<Cell> closedSet = new HashSet<>();
+    Cell start = this.getEntryCell();
+    Cell end = this.getExitCell();
+    start.setGCost(0);
+    start.setHCost(manhattanHeuristic(start, end));
+    openSet.add(start);
+
+    while (openSet.isEmpty() == false) {
+      Cell cur = openSet.poll();
+      closedSet.add(cur);
+      if (cur == end) {
+        List<Cell> backtrack = new ArrayList<Cell>();
+        while (cur != null) {
+          backtrack.add(cur);
+          cur = cur.getParent();
+        }
+        return backtrack;
+      }
+
+      for (Side side : Side.values()) {
+
+        Cell child = this.getNeighbor(cur, side);
+        if (cur.getWalls().contains(side)) {
+          continue;
+        }
+
+        if (child == null || closedSet.contains(child)) {
+          continue;
+        }
+
+        int cost = cur.getGCost() + 1;
+        if (openSet.contains(child) && cost >= child.getGCost()) {
+          continue;
+        }
+
+        child.setParent(cur);
+        child.setGCost(cost);
+        child.setHCost(manhattanHeuristic(child, end));
+        openSet.add(child);
+      }
+    }
+    return null;
   }
 }

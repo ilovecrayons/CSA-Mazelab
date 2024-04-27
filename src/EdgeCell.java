@@ -6,7 +6,7 @@ import graphics.MazeCanvas.Side;
 
 public class EdgeCell extends ShadedCell {
   
-  private static Color edgeColor = Color.CYAN;
+  private static Color edgeColor = Color.LIGHT_GRAY;
   private ArrayList<Side> listOfEdges;
 
   public EdgeCell(MazeCanvas mc, int row, int col) {

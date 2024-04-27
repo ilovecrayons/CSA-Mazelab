@@ -8,6 +8,11 @@ public class Cell {
   private MazeCanvas mc;
   private ArrayList<Side> listOfWalls;
   private boolean visited = false;
+  private Cell parent;
+  private int gCost;
+  private int hCost;
+
+
 
   public boolean getVisited() {
     return visited;
@@ -45,6 +50,34 @@ public class Cell {
     this.mc.eraseWall(this.row, this.col, side);
     listOfWalls.remove(side);
   }
+
+  public Cell getParent() {
+    return parent;
+  }
+
+  public void setParent(Cell parent) {
+    this.parent = parent;
+  }
   
+  public int getGCost() {
+    return gCost;
+  }
+
+  public void setGCost(int gCost) {
+    this.gCost = gCost;
+  }
+
+  public int getHCost() {
+    return hCost;
+  }
+
+  public void setHCost(int hCost) {
+    this.hCost = hCost;
+  }
+
+  public int getFCost() {
+    return gCost + hCost;
+  }
+
 
 }
